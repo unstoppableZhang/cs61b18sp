@@ -87,18 +87,16 @@ public class LinkedListDequeTest {
 
 	public static void printTest(){
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-		lld1.addFirst(1);
-		lld1.addFirst(2);
+		lld1.addLast(0);
+		System.out.println(lld1.removeLast());
+		lld1.addLast(2);
 		lld1.addLast(3);
-		lld1.addLast(4);
-		lld1.addLast(5);
 		lld1.printDeque();
-		System.out.println(lld1.removeLast());
-		System.out.println();
-		lld1.printDeque();
-		lld1.addLast(6);
-		System.out.println(lld1.removeLast());
-		System.out.println(lld1.get(2));
+		System.out.println(lld1.getRecursive(1));
+		System.out.println(lld1.removeFirst());
+		System.out.println(lld1.removeFirst());
+
+
 	}
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
