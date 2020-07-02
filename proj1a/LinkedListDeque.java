@@ -1,5 +1,5 @@
-public class LinkedListDeque<T> implements Deque<T> {
-    public class Node {
+public class LinkedListDeque<T>{
+    private class Node {
         T item;
         Node next;
         Node prev;
@@ -18,6 +18,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
+        size = 0;
     }
 
     public T getRecursive(int index) {
@@ -28,7 +29,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return getRecursive(index, sentinel.next);
     }
 
-    public T getRecursive(int index, Node node){
+    private T getRecursive(int index, Node node){
         if (index == 0){
             return node.item;
         }
@@ -36,37 +37,32 @@ public class LinkedListDeque<T> implements Deque<T> {
         return getRecursive(index-1, node.next);
     }
 
-    @Override
     public void addFirst(T item) {
         Node newNode = new Node(item, sentinel.next, sentinel);
         sentinel.next = newNode;
-        size++;
-        if (size == 1) {
+        if (size == 0) {
             sentinel.prev = newNode;
         }
+        size++;
     }
 
-    @Override
     public void addLast(T item) {
         Node newNode = new Node(item, sentinel, sentinel.prev);
         sentinel.prev = newNode;
-        size++;
-        if (size == 1) {
+        if (size == 0) {
             sentinel.next = newNode;
         }
+        size++;
     }
 
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
     public int size() {
         return size;
     }
 
-    @Override
     public void printDeque() {
         Node curr = sentinel.next;
         if (curr != sentinel){
@@ -78,7 +74,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
 
-    @Override
     public T removeFirst() {
         if (isEmpty()){
             return null;
@@ -96,7 +91,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         return res;
     }
 
-    @Override
     public T removeLast() {
         if (isEmpty()){
             return null;
@@ -114,7 +108,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         return res;
     }
 
-    @Override
     public T get(int index) {
         if (index + 1 > size){
             return null;

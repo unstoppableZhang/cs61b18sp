@@ -7,7 +7,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     public ArrayDeque() {
         CAPACITY = 8;
-        array = (T[]) new Object[CAPACITY];
+        array = (T[]) new Object[CAPACITY + 1];
         size = 0;
         front = end = 0;
     }
