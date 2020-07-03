@@ -1,52 +1,40 @@
 public class ArrayDeque<T> {
     private T[] array;
-    private int size;
     private int CAPACITY;
+    //front是队首元素的index
     private int front;
+    //end是addLast要插入的元素的index
     private int end;
 
     public ArrayDeque() {
         CAPACITY = 8;
-        array = (T[]) new Object[CAPACITY + 1];
-        size = 0;
+        array = (T[]) new Object[CAPACITY];
         front = end = 0;
     }
 
 
     public void addFirst(T item) {
-        size++;
-        if (size + 1 == CAPACITY) {
-            resize(CAPACITY * 2);
-        }
-
-        if (size == 0) {
-            array[front] = item;
-        } else {
-            front = minusOne(front);
-            array[front] = item;
+        front = minusOne(front);
+        array[front] = item;
+        if (front == end) {
+            doubleCapacity();
         }
     }
 
     public void addLast(T item) {
-        size++;
-        if (size + 1 == CAPACITY) {
-            resize(CAPACITY * 2);
+        array[end] = item;
+        end = plusOne(end);
+        if (front == end) {
+            doubleCapacity();
         }
-        if (size == 0) {
-            array[end] = item;
-        } else {
-            end = plusOne(end);
-            array[end] = item;
-        }
-
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return front == end;
     }
 
     public int size() {
-        return size;
+        return (end - front + CAPACITY) % CAPACITY;
     }
 
     public void printDeque() {
@@ -65,13 +53,9 @@ public class ArrayDeque<T> {
         }
         T res = array[front];
         front = plusOne(front);
-        size--;
-        if (size == 0) {
-            end = front;
-        }
 
-        if (size <= (int) (0.25 * CAPACITY) && CAPACITY / 2 > 0) {
-            resize(CAPACITY / 2);
+        if (size() <= (int) (0.25 * CAPACITY) && CAPACITY  >= 16) {
+            halfCapacity();
         }
         return res;
     }
@@ -80,41 +64,51 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T res = array[end];
         end = minusOne(end);
-        size--;
-        if (size == 0) {
-            end = front;
+        T res = array[end];
+        if (size() <= (int) (0.25 * CAPACITY) && CAPACITY >= 16) {
+            halfCapacity();
         }
-
-        if (size <= (int) (0.25 * CAPACITY) && CAPACITY / 2 > 0) {
-            resize(CAPACITY / 2);
-        }
-        return null;
+        return res;
     }
 
     public T get(int index) {
-        if (index > size) {
+        if (index >= size()) {
             return null;
         }
         int i = front;
         while (index > 0) {
-            front = plusOne(front);
+            i = plusOne(i);
             index--;
         }
-        return null;
+        return array[i];
     }
 
-    private void resize(int newCapacity) {
+    private void doubleCapacity() {
+        int newCapacity = CAPACITY * 2;
         T[] newArray = (T[]) new Object[newCapacity];
-        if (front <= end) {
-            System.arraycopy(array, front, newArray, 0, size);
-        } else {
-            System.arraycopy(array, front, newArray, 0, size - front);
-            System.arraycopy(array, 0, newArray, size - front, end + 1);
+
+        //head == tail
+        System.arraycopy(array, front, newArray, 0, array.length - front);
+        System.arraycopy(array, 0, newArray, array.length - front, front);
+        front = 0;
+        end = array.length;
+        array = newArray;
+        CAPACITY = newCapacity;
+    }
+
+    private void halfCapacity(){
+        int newCapacity = CAPACITY / 2;
+        T[] newArray = (T[]) new Object[newCapacity];
+        if (front <= end){
+            System.arraycopy(array,front,newCapacity,0,end - front);
+        }else {
+            System.arraycopy(array, front, newArray, 0, array.length - front);
+            System.arraycopy(array, 0, newArray, array.length - front, end);
         }
         front = 0;
-        end = size - 1;
+        end = array.length;
+        array = newArray;
         CAPACITY = newCapacity;
     }
 
