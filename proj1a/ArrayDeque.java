@@ -101,7 +101,7 @@ public class ArrayDeque<T> {
         int newCapacity = CAPACITY / 2;
         T[] newArray = (T[]) new Object[newCapacity];
         if (front <= end){
-            System.arraycopy(array,front,newCapacity,0,end - front);
+            System.arraycopy(array,front,newArray,0,end - front);
         }else {
             System.arraycopy(array, front, newArray, 0, array.length - front);
             System.arraycopy(array, 0, newArray, array.length - front, end);
