@@ -98,10 +98,39 @@ public class LinkedListDequeTest {
 
 
 	}
+
+	public static void testArrayDeque(){
+		ArrayDeque<Integer> aD = new ArrayDeque<>();
+		aD.addFirst(0);
+		System.out.println(aD.removeFirst());
+		aD.addLast(2);
+		aD.addLast(3);
+		aD.addLast(4);
+		aD.addLast(5);
+		aD.addFirst(6);
+		aD.addLast(7);
+		aD.addLast(8);
+		System.out.println(aD.get(0));
+		System.out.println(aD.removeLast());
+		System.out.println(aD.removeFirst());
+		aD.addLast(12);
+		aD.addFirst(13);
+		System.out.println(aD.removeLast());
+		System.out.println(aD.get(3));
+		aD.addLast(16);
+		System.out.println(aD.get(0));
+		aD.addLast(18);
+		aD.removeLast();
+		aD.removeFirst();
+		aD.removeFirst();
+		aD.removeLast();
+		aD.removeLast();
+	}
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		//addIsEmptySizeTest();
 		//addRemoveTest();
-		printTest();
+		//printTest();
+		testArrayDeque();
 	}
 } 

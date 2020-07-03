@@ -52,9 +52,10 @@ public class ArrayDeque<T> {
             return null;
         }
         T res = array[front];
+        array[front] = null;
         front = plusOne(front);
 
-        if (size() <= (int) (0.25 * CAPACITY) && CAPACITY  >= 16) {
+        if (size() <= (int) (0.25 * CAPACITY) && CAPACITY >= 16) {
             halfCapacity();
         }
         return res;
@@ -66,6 +67,7 @@ public class ArrayDeque<T> {
         }
         end = minusOne(end);
         T res = array[end];
+        array[end] = null;
         if (size() <= (int) (0.25 * CAPACITY) && CAPACITY >= 16) {
             halfCapacity();
         }
@@ -97,12 +99,12 @@ public class ArrayDeque<T> {
         CAPACITY = newCapacity;
     }
 
-    private void halfCapacity(){
+    private void halfCapacity() {
         int newCapacity = CAPACITY / 2;
         T[] newArray = (T[]) new Object[newCapacity];
-        if (front <= end){
-            System.arraycopy(array,front,newArray,0,end - front);
-        }else {
+        if (front <= end) {
+            System.arraycopy(array, front, newArray, 0, end - front);
+        } else {
             System.arraycopy(array, front, newArray, 0, array.length - front);
             System.arraycopy(array, 0, newArray, array.length - front, end);
         }
