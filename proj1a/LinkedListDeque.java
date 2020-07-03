@@ -79,7 +79,7 @@ public class LinkedListDeque<T> {
         Node newFirst = first.next;
         sentinel.next = newFirst;
         newFirst.prev = sentinel;
-        if (size != 0){
+        if (size != 0) {
             first.next = null;
             first.prev = null;
         }
@@ -97,7 +97,7 @@ public class LinkedListDeque<T> {
         Node newLast = last.prev;
         newLast.next = sentinel;
         sentinel.prev = newLast;
-        if (size != 0){
+        if (size != 0) {
             last.next = null;
             last.prev = null;
         }

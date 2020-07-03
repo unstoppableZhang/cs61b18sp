@@ -108,8 +108,8 @@ public class ArrayDeque<T> {
             System.arraycopy(array, front, newArray, 0, array.length - front);
             System.arraycopy(array, 0, newArray, array.length - front, end);
         }
+        end = size();
         front = 0;
-        end = array.length;
         array = newArray;
         CAPACITY = newCapacity;
     }
